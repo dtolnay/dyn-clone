@@ -40,6 +40,12 @@
 
 #![doc(html_root_url = "https://docs.rs/objekt/0.1.0")]
 
+#[macro_use]
+mod macros;
+
+#[doc(hidden)]
+pub extern crate std as private;
+
 /// This trait is implemented by any type that implements [`std::clone::Clone`].
 ///
 /// [`std::clone::Clone`]: https://doc.rust-lang.org/std/clone/trait.Clone.html
