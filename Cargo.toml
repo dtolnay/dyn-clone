@@ -6,3 +6,6 @@ license = "MIT/Apache-2.0"
 description = "Clone trait that is object-safe"
 repository = "https://github.com/dtolnay/objekt"
 documentation = "https://docs.rs/objekt"
+
+[badges]
+travis-ci = { repository = "dtolnay/objekt" }
