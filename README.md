@@ -49,6 +49,24 @@ fn main() {
 }
 ```
 
+This crate includes a macro for concisely implementing `impl std::clone::Clone
+for Box<MyTrait>` in terms of `objekt::clone_box`.
+
+```rust
+// As before.
+trait MyTrait: objekt::Clone {
+    /* ... */
+}
+
+objekt::clone_trait_object!(MyTrait);
+
+// Now data structures containing Box<MyTrait> can derive Clone:
+#[derive(Clone)]
+struct Container {
+    trait_object: Box<MyTrait>,
+}
+```
+
 <br>
 
 #### License
