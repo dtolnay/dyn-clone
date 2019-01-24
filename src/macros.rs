@@ -36,7 +36,7 @@
 /// #
 /// # fn main() {}
 /// ```
-#[macro_export]
+#[macro_export(local_inner_macros)]
 macro_rules! clone_trait_object {
     ($($path:tt)+) => {
         __internal_clone_trait_object!(begin $($path)+);
@@ -44,7 +44,7 @@ macro_rules! clone_trait_object {
 }
 
 #[doc(hidden)]
-#[macro_export]
+#[macro_export(local_inner_macros)]
 macro_rules! __internal_clone_trait_object {
     // Invocation started with `<`, parse generics.
     (begin < $($rest:tt)*) => {
