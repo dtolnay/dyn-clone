@@ -54,7 +54,7 @@
 //! }
 //! ```
 
-#![doc(html_root_url = "https://docs.rs/objekt/0.1.1")]
+#![doc(html_root_url = "https://docs.rs/objekt/0.1.2")]
 
 #[macro_use]
 mod macros;
