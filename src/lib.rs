@@ -9,9 +9,7 @@
 //! 
 //! # Example
 //! 
-//! ```
-//! extern crate objekt;
-//! 
+//! ```edition2018
 //! trait MyTrait: objekt::Clone {
 //!     fn recite(&self);
 //! }

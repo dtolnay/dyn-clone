@@ -1,40 +1,30 @@
 /// Implement the standard library `Clone` for a trait object that has
 /// `objekt::Clone` as a supertrait.
 ///
-/// ```
-/// #[macro_use]
-/// extern crate objekt;
-///
+/// ```edition2018
 /// trait MyTrait: objekt::Clone {
 ///     /* ... */
 /// }
 ///
-/// clone_trait_object!(MyTrait);
+/// objekt::clone_trait_object!(MyTrait);
 ///
 /// // Now data structures containing Box<MyTrait> can derive Clone.
 /// #[derive(Clone)]
 /// struct Container {
 ///     trait_object: Box<MyTrait>,
 /// }
-/// #
-/// # fn main() {}
 /// ```
 ///
 /// The macro supports traits that have type parameters and/or `where` clauses.
 ///
-/// ```
-/// # #[macro_use]
-/// # extern crate objekt;
-/// #
+/// ```edition2018
 /// use std::io::Read;
 ///
 /// trait Difficult<R>: objekt::Clone where R: Read {
 ///     /* ... */
 /// }
 ///
-/// clone_trait_object!(<R> Difficult<R> where R: Read);
-/// #
-/// # fn main() {}
+/// objekt::clone_trait_object!(<R> Difficult<R> where R: Read);
 /// ```
 #[macro_export(local_inner_macros)]
 macro_rules! clone_trait_object {

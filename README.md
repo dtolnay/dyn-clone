@@ -23,8 +23,6 @@ where
 ## Example
 
 ```rust
-extern crate objekt;
-
 trait MyTrait: objekt::Clone {
     fn recite(&self);
 }
