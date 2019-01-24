@@ -38,11 +38,11 @@ fn main() {
 
     // Build a trait object holding a String.
     // This requires String to implement MyTrait and std::clone::Clone.
-    let x: Box<MyTrait> = Box::new(String::from(line));
+    let x: Box<dyn MyTrait> = Box::new(String::from(line));
 
     x.recite();
 
-    // The type of x2 is a Box<MyTrait> cloned from x.
+    // The type of x2 is a Box<dyn MyTrait> cloned from x.
     let x2 = objekt::clone_box(&*x);
 
     x2.recite();
@@ -50,7 +50,7 @@ fn main() {
 ```
 
 This crate includes a macro for concisely implementing `impl std::clone::Clone
-for Box<MyTrait>` in terms of `objekt::clone_box`.
+for Box<dyn MyTrait>` in terms of `objekt::clone_box`.
 
 ```rust
 // As before.
@@ -60,10 +60,10 @@ trait MyTrait: objekt::Clone {
 
 objekt::clone_trait_object!(MyTrait);
 
-// Now data structures containing Box<MyTrait> can derive Clone:
+// Now data structures containing Box<dyn MyTrait> can derive Clone:
 #[derive(Clone)]
 struct Container {
-    trait_object: Box<MyTrait>,
+    trait_object: Box<dyn MyTrait>,
 }
 ```
 

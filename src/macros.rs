@@ -8,10 +8,10 @@
 ///
 /// objekt::clone_trait_object!(MyTrait);
 ///
-/// // Now data structures containing Box<MyTrait> can derive Clone.
+/// // Now data structures containing Box<dyn MyTrait> can derive Clone.
 /// #[derive(Clone)]
 /// struct Container {
-///     trait_object: Box<MyTrait>,
+///     trait_object: Box<dyn MyTrait>,
 /// }
 /// ```
 ///
