@@ -49,8 +49,8 @@ fn main() {
 }
 ```
 
-This crate includes a macro for concisely implementing `impl std::clone::Clone
-for Box<dyn MyTrait>` in terms of `objekt::clone_box`.
+This crate includes a macro for generating the implementation `impl
+std::clone::Clone for Box<dyn MyTrait>` in terms of `objekt::clone_box`:
 
 ```rust
 // As before.
@@ -66,6 +66,11 @@ struct Container {
     trait_object: Box<dyn MyTrait>,
 }
 ```
+
+Check out the [objekt-clonable] crate which provides the same Clone impl for
+`Box<dyn MyTrait>` in a more concise attribute form.
+
+[objekt-clonable]: https://github.com/kardeiz/objekt-clonable
 
 <br>
 
