@@ -9,7 +9,7 @@
 //! 
 //! # Example
 //! 
-//! ```edition2018
+//! ```
 //! trait MyTrait: objekt::Clone {
 //!     fn recite(&self);
 //! }
@@ -39,7 +39,7 @@
 //! This crate includes a macro for concisely implementing `impl
 //! std::clone::Clone for Box<dyn MyTrait>` in terms of `objekt::clone_box`.
 //!
-//! ```edition2018
+//! ```
 //! // As before.
 //! trait MyTrait: objekt::Clone {
 //!     /* ... */
@@ -60,7 +60,7 @@
 mod macros;
 
 #[doc(hidden)]
-pub extern crate std as private;
+pub use std as private;
 
 /// This trait is implemented by any type that implements [`std::clone::Clone`].
 ///
@@ -140,7 +140,7 @@ mod tests {
         let arc = Arc::new(0);
         assert_eq!(Arc::strong_count(&arc), 1);
 
-        let c = ::clone(&arc);
+        let c = crate::clone(&arc);
         assert_eq!(Arc::strong_count(&arc), 2);
         drop(c);
         assert_eq!(Arc::strong_count(&arc), 1);
@@ -159,7 +159,7 @@ mod tests {
                 id: 11,
                 events: events.clone(),
             });
-            let b12 = ::clone_box(&*b11);
+            let b12 = crate::clone_box(&*b11);
             assert_eq!(b11.to_string(), "id=11");
             assert_eq!(b12.to_string(), "id=12");
             expected.push("dropping id=12".to_owned());
