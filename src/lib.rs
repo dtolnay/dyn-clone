@@ -59,7 +59,7 @@
 //! }
 //! ```
 
-#![doc(html_root_url = "https://docs.rs/dyn_clone/1.0.0")]
+#![doc(html_root_url = "https://docs.rs/dyn_clone/1.0.1")]
 
 #[macro_use]
 mod macros;
