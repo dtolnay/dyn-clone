@@ -1,16 +1,19 @@
-//! This crate provides a [`Clone`] trait that can be used in trait objects, and
-//! a [`clone_box`] function that can clone any sized or dynamically sized
-//! implementation of `Clone`. Types that implement the standard library's
-//! [`std::clone::Clone`] trait are automatically usable this way.
+//! This crate provides a [`DynClone`] trait that can be used in trait objects,
+//! and a [`clone_box`] function that can clone any sized or dynamically sized
+//! implementation of `DynClone`. Types that implement the standard library's
+//! [`std::clone::Clone`] trait are automatically usable by a `DynClone` trait
+//! object.
 //! 
-//! [`Clone`]: trait.Clone.html
+//! [`DynClone`]: trait.DynClone.html
 //! [`clone_box`]: fn.clone_box.html
 //! [`std::clone::Clone`]: https://doc.rust-lang.org/std/clone/trait.Clone.html
 //! 
 //! # Example
 //! 
 //! ```
-//! trait MyTrait: objekt::Clone {
+//! use objekt::DynClone;
+//!
+//! trait MyTrait: DynClone {
 //!     fn recite(&self);
 //! }
 //! 
@@ -40,8 +43,10 @@
 //! std::clone::Clone for Box<dyn MyTrait>` in terms of `objekt::clone_box`.
 //!
 //! ```
+//! # use objekt::DynClone;
+//! #
 //! // As before.
-//! trait MyTrait: objekt::Clone {
+//! trait MyTrait: DynClone {
 //!     /* ... */
 //! }
 //!
@@ -65,7 +70,7 @@ pub use std as private;
 /// This trait is implemented by any type that implements [`std::clone::Clone`].
 ///
 /// [`std::clone::Clone`]: https://doc.rust-lang.org/std/clone/trait.Clone.html
-pub trait Clone {
+pub trait DynClone {
     // Not public API
     #[doc(hidden)]
     unsafe fn clone_box(&self) -> *mut ();
@@ -73,29 +78,29 @@ pub trait Clone {
 
 pub fn clone<T>(t: &T) -> T
 where
-    T: Clone,
+    T: DynClone,
 {
     unsafe {
-        *Box::from_raw(<T as Clone>::clone_box(t) as *mut T)
+        *Box::from_raw(<T as DynClone>::clone_box(t) as *mut T)
     }
 }
 
 pub fn clone_box<T>(t: &T) -> Box<T>
 where
-    T: ?Sized + Clone,
+    T: ?Sized + DynClone,
 {
     let mut fat_ptr = t as *const T;
     unsafe {
         let data_ptr = &mut fat_ptr as *mut *const T as *mut *mut ();
         assert_eq!(*data_ptr as *const (), t as *const T as *const ());
-        *data_ptr = <T as Clone>::clone_box(t);
+        *data_ptr = <T as DynClone>::clone_box(t);
     }
     unsafe {
         Box::from_raw(fat_ptr as *mut T)
     }
 }
 
-impl<T> Clone for T
+impl<T> DynClone for T
 where
     T: std::clone::Clone,
 {
@@ -106,6 +111,7 @@ where
 
 #[cfg(test)]
 mod tests {
+    use super::DynClone;
     use std::fmt::{self, Display};
     use std::sync::{Arc, Mutex};
 
@@ -148,7 +154,7 @@ mod tests {
 
     #[test]
     fn clone_trait_object() {
-        trait MyTrait: Display + Sync + super::Clone {}
+        trait MyTrait: Display + Sync + DynClone {}
 
         impl MyTrait for Log {}
 

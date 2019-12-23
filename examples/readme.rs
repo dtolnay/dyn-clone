@@ -1,4 +1,6 @@
-trait MyTrait: objekt::Clone {
+use objekt::DynClone;
+
+trait MyTrait: DynClone {
     fn recite(&self);
 }
 

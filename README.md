@@ -5,10 +5,11 @@ Clone trait that is object-safe
 [![Latest Version](https://img.shields.io/crates/v/objekt.svg)](https://crates.io/crates/objekt)
 [![Rust Documentation](https://img.shields.io/badge/api-rustdoc-blue.svg)](https://docs.rs/objekt/0.1/objekt/)
 
-This crate provides a `Clone` trait that can be used in trait objects, and a
+This crate provides a `DynClone` trait that can be used in trait objects, and a
 `clone_box` function that can clone any sized or dynamically sized
-implementation of `Clone`. Types that implement the standard library's
-[`std::clone::Clone`] trait are automatically usable this way.
+implementation of `DynClone`. Types that implement the standard library's
+[`std::clone::Clone`] trait are automatically usable by a `DynClone` trait
+object.
 
 [`std::clone::Clone`]: https://doc.rust-lang.org/std/clone/trait.Clone.html
 
@@ -17,13 +18,15 @@ The signature of `clone_box` is:
 ```rust
 fn clone_box<T>(t: &T) -> Box<T>
 where
-    T: ?Sized + objekt::Clone
+    T: ?Sized + DynClone
 ```
 
 ## Example
 
 ```rust
-trait MyTrait: objekt::Clone {
+use objekt::DynClone;
+
+trait MyTrait: DynClone {
     fn recite(&self);
 }
 
@@ -54,7 +57,7 @@ std::clone::Clone for Box<dyn MyTrait>` in terms of `objekt::clone_box`:
 
 ```rust
 // As before.
-trait MyTrait: objekt::Clone {
+trait MyTrait: DynClone {
     /* ... */
 }
 

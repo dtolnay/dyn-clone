@@ -1,8 +1,10 @@
 /// Implement the standard library `Clone` for a trait object that has
-/// `objekt::Clone` as a supertrait.
+/// `DynClone` as a supertrait.
 ///
 /// ```
-/// trait MyTrait: objekt::Clone {
+/// use objekt::DynClone;
+///
+/// trait MyTrait: DynClone {
 ///     /* ... */
 /// }
 ///
@@ -18,9 +20,10 @@
 /// The macro supports traits that have type parameters and/or `where` clauses.
 ///
 /// ```
+/// use objekt::DynClone;
 /// use std::io::Read;
 ///
-/// trait Difficult<R>: objekt::Clone where R: Read {
+/// trait Difficult<R>: DynClone where R: Read {
 ///     /* ... */
 /// }
 ///
@@ -95,11 +98,13 @@ macro_rules! __internal_clone_trait_object {
 
 #[cfg(test)]
 mod tests {
+    use crate::DynClone;
+
     fn assert_clone<T: Clone>() {}
 
     #[test]
     fn test_plain() {
-        trait Trait: crate::Clone {}
+        trait Trait: DynClone {}
 
         clone_trait_object!(Trait);
 
@@ -108,7 +113,7 @@ mod tests {
 
     #[test]
     fn test_type_parameter() {
-        trait Trait<T>: crate::Clone {}
+        trait Trait<T>: DynClone {}
 
         clone_trait_object!(<T> Trait<T>);
 
@@ -117,7 +122,7 @@ mod tests {
 
     #[test]
     fn test_generic_bound() {
-        trait Trait<T: PartialEq<T>, U>: crate::Clone {}
+        trait Trait<T: PartialEq<T>, U>: DynClone {}
 
         clone_trait_object!(<T: PartialEq<T>, U> Trait<T, U>);
 
@@ -126,7 +131,7 @@ mod tests {
 
     #[test]
     fn test_where_clause() {
-        trait Trait<T>: crate::Clone where T: Clone {}
+        trait Trait<T>: DynClone where T: Clone {}
 
         clone_trait_object!(<T> Trait<T> where T: Clone);
 
