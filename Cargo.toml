@@ -1,12 +1,12 @@
 [package]
-name = "objekt"
+name = "dyn-clone"
 version = "0.1.2" # remember to update html_root_url
 authors = ["David Tolnay <dtolnay@gmail.com>"]
 edition = "2018"
 license = "MIT OR Apache-2.0"
 description = "Clone trait that is object-safe"
-repository = "https://github.com/dtolnay/objekt"
-documentation = "https://docs.rs/objekt"
+repository = "https://github.com/dtolnay/dyn-clone"
+documentation = "https://docs.rs/dyn-clone"
 
 [badges]
-travis-ci = { repository = "dtolnay/objekt" }
+travis-ci = { repository = "dtolnay/dyn-clone" }

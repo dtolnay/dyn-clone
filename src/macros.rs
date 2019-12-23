@@ -2,13 +2,13 @@
 /// `DynClone` as a supertrait.
 ///
 /// ```
-/// use objekt::DynClone;
+/// use dyn_clone::DynClone;
 ///
 /// trait MyTrait: DynClone {
 ///     /* ... */
 /// }
 ///
-/// objekt::clone_trait_object!(MyTrait);
+/// dyn_clone::clone_trait_object!(MyTrait);
 ///
 /// // Now data structures containing Box<dyn MyTrait> can derive Clone.
 /// #[derive(Clone)]
@@ -20,14 +20,14 @@
 /// The macro supports traits that have type parameters and/or `where` clauses.
 ///
 /// ```
-/// use objekt::DynClone;
+/// use dyn_clone::DynClone;
 /// use std::io::Read;
 ///
 /// trait Difficult<R>: DynClone where R: Read {
 ///     /* ... */
 /// }
 ///
-/// objekt::clone_trait_object!(<R> Difficult<R> where R: Read);
+/// dyn_clone::clone_trait_object!(<R> Difficult<R> where R: Read);
 /// ```
 #[macro_export]
 macro_rules! clone_trait_object {

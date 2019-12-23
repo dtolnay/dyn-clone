@@ -11,7 +11,7 @@
 //! # Example
 //! 
 //! ```
-//! use objekt::DynClone;
+//! use dyn_clone::DynClone;
 //!
 //! trait MyTrait: DynClone {
 //!     fn recite(&self);
@@ -33,24 +33,24 @@
 //!     x.recite();
 //! 
 //!     // The type of x2 is a Box<dyn MyTrait> cloned from x.
-//!     let x2 = objekt::clone_box(&*x);
+//!     let x2 = dyn_clone::clone_box(&*x);
 //! 
 //!     x2.recite();
 //! }
 //! ```
 //!
 //! This crate includes a macro for concisely implementing `impl
-//! std::clone::Clone for Box<dyn MyTrait>` in terms of `objekt::clone_box`.
+//! std::clone::Clone for Box<dyn MyTrait>` in terms of `dyn_clone::clone_box`.
 //!
 //! ```
-//! # use objekt::DynClone;
+//! # use dyn_clone::DynClone;
 //! #
 //! // As before.
 //! trait MyTrait: DynClone {
 //!     /* ... */
 //! }
 //!
-//! objekt::clone_trait_object!(MyTrait);
+//! dyn_clone::clone_trait_object!(MyTrait);
 //!
 //! // Now data structures containing Box<dyn MyTrait> can derive Clone:
 //! #[derive(Clone)]
@@ -59,7 +59,7 @@
 //! }
 //! ```
 
-#![doc(html_root_url = "https://docs.rs/objekt/0.1.2")]
+#![doc(html_root_url = "https://docs.rs/dyn_clone/0.1.2")]
 
 #[macro_use]
 mod macros;
