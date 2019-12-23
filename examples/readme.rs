@@ -13,11 +13,11 @@ fn main() {
 
     // Build a trait object holding a String.
     // This requires String to implement MyTrait and std::clone::Clone.
-    let x: Box<MyTrait> = Box::new(String::from(line));
+    let x: Box<dyn MyTrait> = Box::new(String::from(line));
 
     x.recite();
 
-    // The type of x2 is a Box<MyTrait> cloned from x.
+    // The type of x2 is a Box<dyn MyTrait> cloned from x.
     let x2 = objekt::clone_box(&*x);
 
     x2.recite();

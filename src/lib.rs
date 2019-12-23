@@ -155,7 +155,7 @@ mod tests {
         let events = Arc::new(Mutex::new(Vec::new()));
         let mut expected = Vec::new();
         {
-            let b11: Box<MyTrait> = Box::new(Log {
+            let b11: Box<dyn MyTrait> = Box::new(Log {
                 id: 11,
                 events: events.clone(),
             });

@@ -83,7 +83,7 @@ macro_rules! __internal_clone_trait_object {
 
     // The impl.
     (impl ($($generics:tt)*) ($($path:tt)*) ($($bound:tt)*)) => {
-        impl<'clone, $($generics)*> $crate::private::clone::Clone for $crate::private::boxed::Box<$($path)* + 'clone> where $($bound)* {
+        impl<'clone, $($generics)*> $crate::private::clone::Clone for $crate::private::boxed::Box<dyn $($path)* + 'clone> where $($bound)* {
             fn clone(&self) -> Self {
                 $crate::clone_box(&**self)
             }
@@ -103,7 +103,7 @@ mod tests {
 
         clone_trait_object!(Trait);
 
-        assert_clone::<Box<Trait>>();
+        assert_clone::<Box<dyn Trait>>();
     }
 
     #[test]
@@ -112,7 +112,7 @@ mod tests {
 
         clone_trait_object!(<T> Trait<T>);
 
-        assert_clone::<Box<Trait<u32>>>();
+        assert_clone::<Box<dyn Trait<u32>>>();
     }
 
     #[test]
@@ -121,7 +121,7 @@ mod tests {
 
         clone_trait_object!(<T: PartialEq<T>, U> Trait<T, U>);
 
-        assert_clone::<Box<Trait<u32, ()>>>();
+        assert_clone::<Box<dyn Trait<u32, ()>>>();
     }
 
     #[test]
@@ -130,6 +130,6 @@ mod tests {
 
         clone_trait_object!(<T> Trait<T> where T: Clone);
 
-        assert_clone::<Box<Trait<u32>>>();
+        assert_clone::<Box<dyn Trait<u32>>>();
     }
 }
