@@ -70,10 +70,13 @@ struct Container {
 }
 ```
 
+<!-- (TODO: uncomment after objekt-clonable updates to dyn-clone 1.0)
+
 Check out the [objekt-clonable] crate which provides the same Clone impl for
 `Box<dyn MyTrait>` in a more concise attribute form.
 
 [objekt-clonable]: https://github.com/kardeiz/objekt-clonable
+-->
 
 <br>
 
