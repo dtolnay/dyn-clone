@@ -11,3 +11,6 @@ readme = "README.md"
 
 [badges]
 travis-ci = { repository = "dtolnay/dyn-clone" }
+
+[package.metadata.docs.rs]
+targets = ["x86_64-unknown-linux-gnu"]
