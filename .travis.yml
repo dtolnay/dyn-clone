@@ -1,8 +1,0 @@
-sudo: false
-language: rust
-
-rust:
-  - nightly
-  - beta
-  - stable
-  - 1.31.0
