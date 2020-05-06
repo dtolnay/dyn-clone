@@ -1,7 +1,7 @@
 Clone trait that is object-safe
 ===============================
 
-[![Build Status](https://api.travis-ci.org/dtolnay/dyn-clone.svg?branch=master)](https://travis-ci.org/dtolnay/dyn-clone)
+[![Build Status](https://img.shields.io/github/workflow/status/dtolnay/dyn-clone/CI/master)](https://github.com/dtolnay/dyn-clone/actions?query=branch%3Amaster)
 [![Latest Version](https://img.shields.io/crates/v/dyn-clone.svg)](https://crates.io/crates/dyn-clone)
 [![Rust Documentation](https://img.shields.io/badge/api-rustdoc-blue.svg)](https://docs.rs/dyn-clone)
 
