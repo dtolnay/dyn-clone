@@ -1,12 +1,12 @@
 //! This crate provides a [`DynClone`] trait that can be used in trait objects,
 //! and a [`clone_box`] function that can clone any sized or dynamically sized
 //! implementation of `DynClone`. Types that implement the standard library's
-//! [`std::clone::Clone`] trait are automatically usable by a `DynClone` trait
+//! [`core::clone::Clone`] trait are automatically usable by a `DynClone` trait
 //! object.
 //! 
 //! [`DynClone`]: trait.DynClone.html
 //! [`clone_box`]: fn.clone_box.html
-//! [`std::clone::Clone`]: https://doc.rust-lang.org/std/clone/trait.Clone.html
+//! [`core::clone::Clone`]: https://doc.rust-lang.org/core/clone/trait.Clone.html
 //! 
 //! # Example
 //! 
@@ -27,7 +27,7 @@
 //!     let line = "The slithy structs did gyre and gimble the namespace";
 //! 
 //!     // Build a trait object holding a String.
-//!     // This requires String to implement MyTrait and std::clone::Clone.
+//!     // This requires String to implement MyTrait and core::clone::Clone.
 //!     let x: Box<dyn MyTrait> = Box::new(String::from(line));
 //! 
 //!     x.recite();
@@ -40,7 +40,7 @@
 //! ```
 //!
 //! This crate includes a macro for concisely implementing `impl
-//! std::clone::Clone for Box<dyn MyTrait>` in terms of `dyn_clone::clone_box`.
+//! core::clone::Clone for Box<dyn MyTrait>` in terms of `dyn_clone::clone_box`.
 //!
 //! ```
 //! # use dyn_clone::DynClone;
@@ -60,16 +60,22 @@
 //! ```
 
 #![doc(html_root_url = "https://docs.rs/dyn_clone/1.0.1")]
+#![no_std]
+
+pub extern crate alloc;
 
 #[macro_use]
 mod macros;
 
 #[doc(hidden)]
-pub use std as private;
+pub use core as private_core;
+pub use alloc as private_alloc;
 
-/// This trait is implemented by any type that implements [`std::clone::Clone`].
+use alloc::boxed::Box;
+
+/// This trait is implemented by any type that implements [`core::clone::Clone`].
 ///
-/// [`std::clone::Clone`]: https://doc.rust-lang.org/std/clone/trait.Clone.html
+/// [`core::clone::Clone`]: https://doc.rust-lang.org/core/clone/trait.Clone.html
 pub trait DynClone {
     // Not public API
     #[doc(hidden)]
@@ -102,7 +108,7 @@ where
 
 impl<T> DynClone for T
 where
-    T: std::clone::Clone,
+    T: core::clone::Clone,
 {
     unsafe fn clone_box(&self) -> *mut () {
         Box::into_raw(Box::new(self.clone())) as *mut ()
@@ -112,12 +118,19 @@ where
 #[cfg(test)]
 mod tests {
     use super::DynClone;
-    use std::fmt::{self, Display};
-    use std::sync::{Arc, Mutex};
+    use core::fmt::{self, Display};
+    use core::cell::RefCell;
+    use alloc::sync::Arc;
+    use alloc::string::String;
+    use alloc::format;
+    use alloc::vec::Vec;
+    use alloc::boxed::Box;
+    use alloc::string::ToString;
+    use alloc::borrow::ToOwned;
 
     struct Log {
         id: u64,
-        events: Arc<Mutex<Vec<String>>>,
+        events: Arc<RefCell<Vec<String>>>,
     }
 
     impl Clone for Log {
@@ -137,7 +150,7 @@ mod tests {
 
     impl Drop for Log {
         fn drop(&mut self) {
-            self.events.lock().unwrap().push(format!("dropping {}", self))
+            self.events.borrow_mut().push(format!("dropping {}", self))
         }
     }
 
@@ -154,11 +167,11 @@ mod tests {
 
     #[test]
     fn clone_trait_object() {
-        trait MyTrait: Display + Sync + DynClone {}
+        trait MyTrait: Display + DynClone {}
 
         impl MyTrait for Log {}
 
-        let events = Arc::new(Mutex::new(Vec::new()));
+        let events = Arc::new(RefCell::new(Vec::new()));
         let mut expected = Vec::new();
         {
             let b11: Box<dyn MyTrait> = Box::new(Log {
@@ -171,6 +184,6 @@ mod tests {
             expected.push("dropping id=12".to_owned());
             expected.push("dropping id=11".to_owned());
         }
-        assert_eq!(*events.lock().unwrap(), expected);
+        assert_eq!(*events.borrow(), expected);
     }
 }

@@ -86,7 +86,7 @@ macro_rules! __internal_clone_trait_object {
 
     // The impl.
     (impl ($($generics:tt)*) ($($path:tt)*) ($($bound:tt)*)) => {
-        impl<'clone, $($generics)*> $crate::private::clone::Clone for $crate::private::boxed::Box<dyn $($path)* + 'clone> where $($bound)* {
+        impl<'clone, $($generics)*> $crate::private_core::clone::Clone for $crate::private_alloc::boxed::Box<dyn $($path)* + 'clone> where $($bound)* {
             fn clone(&self) -> Self {
                 $crate::clone_box(&**self)
             }
@@ -99,6 +99,7 @@ macro_rules! __internal_clone_trait_object {
 #[cfg(test)]
 mod tests {
     use crate::DynClone;
+    use alloc::boxed::Box;
 
     fn assert_clone<T: Clone>() {}
 
