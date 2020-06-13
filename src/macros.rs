@@ -86,7 +86,7 @@ macro_rules! __internal_clone_trait_object {
 
     // The impl.
     (impl ($($generics:tt)*) ($($path:tt)*) ($($bound:tt)*)) => {
-        impl<'clone, $($generics)*> $crate::private::clone::Clone for $crate::private::boxed::Box<dyn $($path)* + 'clone> where $($bound)* {
+        impl<'clone, $($generics)*> $crate::private::Clone for $crate::private::Box<dyn $($path)* + 'clone> where $($bound)* {
             fn clone(&self) -> Self {
                 $crate::clone_box(&**self)
             }

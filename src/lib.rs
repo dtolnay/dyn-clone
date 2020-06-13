@@ -65,7 +65,10 @@
 mod macros;
 
 #[doc(hidden)]
-pub use std as private;
+pub mod private {
+    pub use std::boxed::Box;
+    pub use std::clone::Clone;
+}
 
 /// This trait is implemented by any type that implements [`std::clone::Clone`].
 ///
