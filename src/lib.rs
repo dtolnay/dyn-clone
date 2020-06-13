@@ -60,14 +60,17 @@
 //! ```
 
 #![doc(html_root_url = "https://docs.rs/dyn_clone/1.0.1")]
+#![no_std]
+
+extern crate alloc;
 
 #[macro_use]
 mod macros;
 
 #[doc(hidden)]
 pub mod private {
-    pub use std::boxed::Box;
-    pub use std::clone::Clone;
+    pub use alloc::boxed::Box;
+    pub use core::clone::Clone;
 }
 
 /// This trait is implemented by any type that implements [`std::clone::Clone`].
@@ -78,6 +81,8 @@ pub trait DynClone {
     #[doc(hidden)]
     unsafe fn clone_box(&self) -> *mut ();
 }
+
+use alloc::boxed::Box;
 
 pub fn clone<T>(t: &T) -> T
 where
@@ -105,7 +110,7 @@ where
 
 impl<T> DynClone for T
 where
-    T: std::clone::Clone,
+    T: core::clone::Clone,
 {
     unsafe fn clone_box(&self) -> *mut () {
         Box::into_raw(Box::new(self.clone())) as *mut ()
