@@ -67,7 +67,7 @@
 //! }
 //! ```
 
-#![doc(html_root_url = "https://docs.rs/dyn_clone/1.0.1")]
+#![doc(html_root_url = "https://docs.rs/dyn_clone/1.0.2")]
 #![no_std]
 
 extern crate alloc;
