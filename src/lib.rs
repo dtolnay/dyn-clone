@@ -96,9 +96,7 @@ pub fn clone<T>(t: &T) -> T
 where
     T: DynClone,
 {
-    unsafe {
-        *Box::from_raw(<T as DynClone>::clone_box(t) as *mut T)
-    }
+    unsafe { *Box::from_raw(<T as DynClone>::clone_box(t) as *mut T) }
 }
 
 pub fn clone_box<T>(t: &T) -> Box<T>
@@ -111,9 +109,7 @@ where
         assert_eq!(*data_ptr as *const (), t as *const T as *const ());
         *data_ptr = <T as DynClone>::clone_box(t);
     }
-    unsafe {
-        Box::from_raw(fat_ptr as *mut T)
-    }
+    unsafe { Box::from_raw(fat_ptr as *mut T) }
 }
 
 impl<T> DynClone for T

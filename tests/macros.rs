@@ -31,7 +31,11 @@ fn test_generic_bound() {
 
 #[test]
 fn test_where_clause() {
-    trait Trait<T>: DynClone where T: Clone {}
+    trait Trait<T>: DynClone
+    where
+        T: Clone,
+    {
+    }
 
     clone_trait_object!(<T> Trait<T> where T: Clone);
 

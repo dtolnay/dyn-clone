@@ -24,7 +24,10 @@ impl Display for Log {
 
 impl Drop for Log {
     fn drop(&mut self) {
-        self.events.lock().unwrap().push(format!("dropping {}", self))
+        self.events
+            .lock()
+            .unwrap()
+            .push(format!("dropping {}", self))
     }
 }
 
