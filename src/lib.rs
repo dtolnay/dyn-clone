@@ -118,7 +118,7 @@ where
 
 impl<T> DynClone for T
 where
-    T: core::clone::Clone,
+    T: Clone,
 {
     unsafe fn clone_box(&self) -> *mut () {
         Box::into_raw(Box::new(self.clone())) as *mut ()
