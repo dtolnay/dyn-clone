@@ -72,6 +72,8 @@
 
 extern crate alloc;
 
+use crate::sealed::{Private, Sealed};
+
 #[macro_use]
 mod macros;
 
@@ -81,13 +83,19 @@ pub mod private {
     pub use core::clone::Clone;
 }
 
+mod sealed {
+    pub trait Sealed {}
+    impl<T: Clone> Sealed for T {}
+    pub struct Private;
+}
+
 /// This trait is implemented by any type that implements [`std::clone::Clone`].
 ///
 /// [`std::clone::Clone`]: https://doc.rust-lang.org/std/clone/trait.Clone.html
-pub trait DynClone {
+pub trait DynClone: Sealed {
     // Not public API
     #[doc(hidden)]
-    unsafe fn clone_box(&self) -> *mut ();
+    fn clone_box(&self, _: Private) -> *mut ();
 }
 
 use alloc::boxed::Box;
@@ -96,7 +104,7 @@ pub fn clone<T>(t: &T) -> T
 where
     T: DynClone,
 {
-    unsafe { *Box::from_raw(<T as DynClone>::clone_box(t) as *mut T) }
+    unsafe { *Box::from_raw(<T as DynClone>::clone_box(t, Private) as *mut T) }
 }
 
 pub fn clone_box<T>(t: &T) -> Box<T>
@@ -107,7 +115,7 @@ where
     unsafe {
         let data_ptr = &mut fat_ptr as *mut *const T as *mut *mut ();
         assert_eq!(*data_ptr as *const (), t as *const T as *const ());
-        *data_ptr = <T as DynClone>::clone_box(t);
+        *data_ptr = <T as DynClone>::clone_box(t, Private);
     }
     unsafe { Box::from_raw(fat_ptr as *mut T) }
 }
@@ -116,7 +124,7 @@ impl<T> DynClone for T
 where
     T: Clone,
 {
-    unsafe fn clone_box(&self) -> *mut () {
+    fn clone_box(&self, _: Private) -> *mut () {
         Box::into_raw(Box::new(self.clone())) as *mut ()
     }
 }
