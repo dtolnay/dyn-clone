@@ -95,7 +95,7 @@ mod sealed {
 pub trait DynClone: Sealed {
     // Not public API
     #[doc(hidden)]
-    fn clone_box(&self, _: Private) -> *mut ();
+    fn __clone_box(&self, _: Private) -> *mut ();
 }
 
 use alloc::boxed::Box;
@@ -104,7 +104,7 @@ pub fn clone<T>(t: &T) -> T
 where
     T: DynClone,
 {
-    unsafe { *Box::from_raw(<T as DynClone>::clone_box(t, Private) as *mut T) }
+    unsafe { *Box::from_raw(<T as DynClone>::__clone_box(t, Private) as *mut T) }
 }
 
 pub fn clone_box<T>(t: &T) -> Box<T>
@@ -115,7 +115,7 @@ where
     unsafe {
         let data_ptr = &mut fat_ptr as *mut *const T as *mut *mut ();
         assert_eq!(*data_ptr as *const (), t as *const T as *const ());
-        *data_ptr = <T as DynClone>::clone_box(t, Private);
+        *data_ptr = <T as DynClone>::__clone_box(t, Private);
     }
     unsafe { Box::from_raw(fat_ptr as *mut T) }
 }
@@ -124,7 +124,7 @@ impl<T> DynClone for T
 where
     T: Clone,
 {
-    fn clone_box(&self, _: Private) -> *mut () {
+    fn __clone_box(&self, _: Private) -> *mut () {
         Box::into_raw(Box::new(self.clone())) as *mut ()
     }
 }
