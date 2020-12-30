@@ -81,6 +81,7 @@ mod macros;
 pub mod private {
     pub use alloc::boxed::Box;
     pub use core::clone::Clone;
+    pub use core::marker::{Send, Sync};
 }
 
 mod sealed {

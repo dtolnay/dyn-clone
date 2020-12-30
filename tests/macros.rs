@@ -9,6 +9,9 @@ fn test_plain() {
     clone_trait_object!(Trait);
 
     assert_clone::<Box<dyn Trait>>();
+    assert_clone::<Box<dyn Trait + Send>>();
+    assert_clone::<Box<dyn Trait + Sync>>();
+    assert_clone::<Box<dyn Trait + Send + Sync>>();
 }
 
 #[test]
