@@ -91,5 +91,20 @@ macro_rules! __internal_clone_trait_object {
                 $crate::clone_box(&**self)
             }
         }
+        impl<'clone, $($generics)*> $crate::private::Clone for $crate::private::Box<dyn $($path)* + $crate::private::Send + 'clone> where $($bound)* {
+            fn clone(&self) -> Self {
+                $crate::clone_box(&**self)
+            }
+        }
+        impl<'clone, $($generics)*> $crate::private::Clone for $crate::private::Box<dyn $($path)* + $crate::private::Sync + 'clone> where $($bound)* {
+            fn clone(&self) -> Self {
+                $crate::clone_box(&**self)
+            }
+        }
+        impl<'clone, $($generics)*> $crate::private::Clone for $crate::private::Box<dyn $($path)* + $crate::private::Send + $crate::private::Sync + 'clone> where $($bound)* {
+            fn clone(&self) -> Self {
+                $crate::clone_box(&**self)
+            }
+        }
     };
 }
