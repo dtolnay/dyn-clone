@@ -1,5 +1,3 @@
-#![allow(clippy::semicolon_if_nothing_returned)]
-
 use dyn_clone::DynClone;
 use std::fmt::{self, Display};
 use std::sync::{Arc, Mutex};
@@ -29,7 +27,7 @@ impl Drop for Log {
         self.events
             .lock()
             .unwrap()
-            .push(format!("dropping {}", self))
+            .push(format!("dropping {}", self));
     }
 }
 
