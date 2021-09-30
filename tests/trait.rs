@@ -1,3 +1,5 @@
+#![allow(clippy::semicolon_if_nothing_returned)]
+
 use dyn_clone::DynClone;
 use std::fmt::{self, Display};
 use std::sync::{Arc, Mutex};
