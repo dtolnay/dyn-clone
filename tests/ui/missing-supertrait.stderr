@@ -1,0 +1,55 @@
+error[E0277]: the trait bound `dyn MyTrait: Clone` is not satisfied
+   --> tests/ui/missing-supertrait.rs:3:1
+    |
+3   | dyn_clone::clone_trait_object!(MyTrait);
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ the trait `Clone` is not implemented for `dyn MyTrait`
+    |
+    = note: required because of the requirements on the impl of `DynClone` for `dyn MyTrait`
+note: required by a bound in `clone_box`
+   --> src/lib.rs
+    |
+    |     T: ?Sized + DynClone,
+    |                 ^^^^^^^^ required by this bound in `clone_box`
+    = note: this error originates in the macro `$crate::__internal_clone_trait_object` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0277]: the trait bound `dyn MyTrait + Send: Clone` is not satisfied
+   --> tests/ui/missing-supertrait.rs:3:1
+    |
+3   | dyn_clone::clone_trait_object!(MyTrait);
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ the trait `Clone` is not implemented for `dyn MyTrait + Send`
+    |
+    = note: required because of the requirements on the impl of `DynClone` for `dyn MyTrait + Send`
+note: required by a bound in `clone_box`
+   --> src/lib.rs
+    |
+    |     T: ?Sized + DynClone,
+    |                 ^^^^^^^^ required by this bound in `clone_box`
+    = note: this error originates in the macro `$crate::__internal_clone_trait_object` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0277]: the trait bound `dyn MyTrait + Sync: Clone` is not satisfied
+   --> tests/ui/missing-supertrait.rs:3:1
+    |
+3   | dyn_clone::clone_trait_object!(MyTrait);
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ the trait `Clone` is not implemented for `dyn MyTrait + Sync`
+    |
+    = note: required because of the requirements on the impl of `DynClone` for `dyn MyTrait + Sync`
+note: required by a bound in `clone_box`
+   --> src/lib.rs
+    |
+    |     T: ?Sized + DynClone,
+    |                 ^^^^^^^^ required by this bound in `clone_box`
+    = note: this error originates in the macro `$crate::__internal_clone_trait_object` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0277]: the trait bound `dyn MyTrait + Send + Sync: Clone` is not satisfied
+   --> tests/ui/missing-supertrait.rs:3:1
+    |
+3   | dyn_clone::clone_trait_object!(MyTrait);
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ the trait `Clone` is not implemented for `dyn MyTrait + Send + Sync`
+    |
+    = note: required because of the requirements on the impl of `DynClone` for `dyn MyTrait + Send + Sync`
+note: required by a bound in `clone_box`
+   --> src/lib.rs
+    |
+    |     T: ?Sized + DynClone,
+    |                 ^^^^^^^^ required by this bound in `clone_box`
+    = note: this error originates in the macro `$crate::__internal_clone_trait_object` (in Nightly builds, run with -Z macro-backtrace for more info)
