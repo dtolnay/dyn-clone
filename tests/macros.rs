@@ -44,3 +44,12 @@ fn test_where_clause() {
 
     assert_clone::<Box<dyn Trait<u32>>>();
 }
+
+#[test]
+fn test_lifetime() {
+    trait Trait<'a>: DynClone {}
+
+    clone_trait_object!(<'a> Trait<'a>);
+
+    assert_clone::<Box<dyn Trait>>();
+}
