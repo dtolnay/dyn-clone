@@ -120,6 +120,8 @@ pub trait DynClone: Sealed {
 }
 
 use alloc::boxed::Box;
+use alloc::rc::Rc;
+use alloc::sync::Arc;
 
 pub fn clone<T>(t: &T) -> T
 where
@@ -139,6 +141,44 @@ where
         *data_ptr = <T as DynClone>::__clone_box(t, Private);
     }
     unsafe { Box::from_raw(fat_ptr as *mut T) }
+}
+
+pub fn arc_make_mut<T>(arc: &mut Arc<T>) -> &mut T
+where
+    T: ?Sized + DynClone,
+{
+    // Atomic. Find out whether the Arc in the argument is the single holder of
+    // a reference count (strong or weak) on the target object. If yes, it is
+    // guaranteed to remain that way throughout the rest of this function
+    // because no other threads could bump the reference count through any other
+    // Arc (because no others exist) or through this Arc (because the current
+    // thread holds an exclusive borrow of it).
+    let is_unique = Arc::get_mut(arc).is_some();
+    if !is_unique {
+        // Non-atomic.
+        let clone = Arc::from(clone_box(&**arc));
+        // Atomic. Check the reference counts again to find out whether the old
+        // object needs to be dropped. Probably not, but it can happen if all
+        // the other holders of a reference count went away during the time that
+        // the clone operation took.
+        *arc = clone;
+    }
+    // Non-atomic. TODO: replace with Arc::get_mut_unchecked when stable.
+    let ptr = Arc::as_ptr(arc) as *mut T;
+    unsafe { &mut *ptr }
+}
+
+pub fn rc_make_mut<T>(rc: &mut Rc<T>) -> &mut T
+where
+    T: ?Sized + DynClone,
+{
+    let is_unique = Rc::get_mut(rc).is_some();
+    if !is_unique {
+        let clone = Rc::from(clone_box(&**rc));
+        *rc = clone;
+    }
+    let ptr = Rc::as_ptr(rc) as *mut T;
+    unsafe { &mut *ptr }
 }
 
 impl<T> DynClone for T
