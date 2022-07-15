@@ -123,6 +123,7 @@ use alloc::boxed::Box;
 use alloc::rc::Rc;
 use alloc::sync::Arc;
 
+/// `&T`&ensp;&mdash;&blacktriangleright;&ensp;`T`
 pub fn clone<T>(t: &T) -> T
 where
     T: DynClone,
@@ -130,6 +131,7 @@ where
     unsafe { *Box::from_raw(<T as DynClone>::__clone_box(t, Private) as *mut T) }
 }
 
+/// `&T`&ensp;&mdash;&blacktriangleright;&ensp;`Box<T>`
 pub fn clone_box<T>(t: &T) -> Box<T>
 where
     T: ?Sized + DynClone,
@@ -143,6 +145,7 @@ where
     unsafe { Box::from_raw(fat_ptr as *mut T) }
 }
 
+/// `&mut Arc<T>`&ensp;&mdash;&blacktriangleright;&ensp;`&mut T`
 pub fn arc_make_mut<T>(arc: &mut Arc<T>) -> &mut T
 where
     T: ?Sized + DynClone,
@@ -168,6 +171,7 @@ where
     unsafe { &mut *ptr }
 }
 
+/// `&mut Rc<T>`&ensp;&mdash;&blacktriangleright;&ensp;`&mut T`
 pub fn rc_make_mut<T>(rc: &mut Rc<T>) -> &mut T
 where
     T: ?Sized + DynClone,
