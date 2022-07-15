@@ -4,6 +4,9 @@ error[E0277]: the trait bound `dyn MyTrait: Clone` is not satisfied
 3   | dyn_clone::clone_trait_object!(MyTrait);
     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ the trait `Clone` is not implemented for `dyn MyTrait`
     |
+    = help: the following other types implement trait `DynClone`:
+              [T]
+              str
     = note: required because of the requirements on the impl of `DynClone` for `dyn MyTrait`
 note: required by a bound in `clone_box`
    --> src/lib.rs
@@ -18,6 +21,9 @@ error[E0277]: the trait bound `dyn MyTrait + Send: Clone` is not satisfied
 3   | dyn_clone::clone_trait_object!(MyTrait);
     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ the trait `Clone` is not implemented for `dyn MyTrait + Send`
     |
+    = help: the following other types implement trait `DynClone`:
+              [T]
+              str
     = note: required because of the requirements on the impl of `DynClone` for `dyn MyTrait + Send`
 note: required by a bound in `clone_box`
    --> src/lib.rs
@@ -32,6 +38,9 @@ error[E0277]: the trait bound `dyn MyTrait + Sync: Clone` is not satisfied
 3   | dyn_clone::clone_trait_object!(MyTrait);
     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ the trait `Clone` is not implemented for `dyn MyTrait + Sync`
     |
+    = help: the following other types implement trait `DynClone`:
+              [T]
+              str
     = note: required because of the requirements on the impl of `DynClone` for `dyn MyTrait + Sync`
 note: required by a bound in `clone_box`
    --> src/lib.rs
@@ -46,6 +55,9 @@ error[E0277]: the trait bound `dyn MyTrait + Send + Sync: Clone` is not satisfie
 3   | dyn_clone::clone_trait_object!(MyTrait);
     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ the trait `Clone` is not implemented for `dyn MyTrait + Send + Sync`
     |
+    = help: the following other types implement trait `DynClone`:
+              [T]
+              str
     = note: required because of the requirements on the impl of `DynClone` for `dyn MyTrait + Send + Sync`
 note: required by a bound in `clone_box`
    --> src/lib.rs
