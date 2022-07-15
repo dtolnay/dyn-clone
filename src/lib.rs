@@ -125,7 +125,7 @@ pub fn clone<T>(t: &T) -> T
 where
     T: DynClone,
 {
-    unsafe { *Box::from_raw(<T as DynClone>::__clone_box(t, Private) as *mut T) }
+    unsafe { *Box::from_raw(<T as DynClone>::__clone_box(t, Private).cast::<T>()) }
 }
 
 pub fn clone_box<T>(t: &T) -> Box<T>
@@ -134,8 +134,8 @@ where
 {
     let mut fat_ptr = t as *const T;
     unsafe {
-        let data_ptr = &mut fat_ptr as *mut *const T as *mut *mut ();
-        assert_eq!(*data_ptr as *const (), t as *const T as *const ());
+        let data_ptr = (&mut fat_ptr as *mut *const T).cast::<*mut ()>();
+        assert_eq!(*data_ptr as *const (), (t as *const T).cast::<()>());
         *data_ptr = <T as DynClone>::__clone_box(t, Private);
     }
     unsafe { Box::from_raw(fat_ptr as *mut T) }
@@ -146,13 +146,13 @@ where
     T: Clone,
 {
     fn __clone_box(&self, _: Private) -> *mut () {
-        Box::<T>::into_raw(Box::new(self.clone())) as *mut ()
+        Box::<T>::into_raw(Box::new(self.clone())).cast::<()>()
     }
 }
 
 impl DynClone for str {
     fn __clone_box(&self, _: Private) -> *mut () {
-        Box::<str>::into_raw(Box::from(self)) as *mut ()
+        Box::<str>::into_raw(Box::from(self)).cast::<()>()
     }
 }
 
@@ -161,6 +161,6 @@ where
     T: Clone,
 {
     fn __clone_box(&self, _: Private) -> *mut () {
-        Box::<[T]>::into_raw(self.iter().cloned().collect()) as *mut ()
+        Box::<[T]>::into_raw(self.iter().cloned().collect()).cast::<()>()
     }
 }
