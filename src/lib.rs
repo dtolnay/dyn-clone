@@ -88,6 +88,8 @@ pub mod private {
 mod sealed {
     pub trait Sealed {}
     impl<T: Clone> Sealed for T {}
+    impl Sealed for str {}
+    impl<T: Clone> Sealed for [T] {}
     pub struct Private;
 }
 
@@ -127,6 +129,21 @@ where
     T: Clone,
 {
     fn __clone_box(&self, _: Private) -> *mut () {
-        Box::into_raw(Box::new(self.clone())) as *mut ()
+        Box::<T>::into_raw(Box::new(self.clone())) as *mut ()
+    }
+}
+
+impl DynClone for str {
+    fn __clone_box(&self, _: Private) -> *mut () {
+        Box::<str>::into_raw(Box::from(self)) as *mut ()
+    }
+}
+
+impl<T> DynClone for [T]
+where
+    T: Clone,
+{
+    fn __clone_box(&self, _: Private) -> *mut () {
+        Box::<[T]>::into_raw(self.iter().cloned().collect()) as *mut ()
     }
 }
