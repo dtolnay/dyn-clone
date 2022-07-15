@@ -66,6 +66,23 @@
 //!     trait_object: Box<dyn MyTrait>,
 //! }
 //! ```
+//!
+//! The `clone_trait_object!` macro expands to just the following, which you can
+//! handwrite instead if you prefer:
+//!
+//! ```
+//! # use dyn_clone::DynClone;
+//! #
+//! # trait MyTrait: DynClone {}
+//! #
+//! impl Clone for Box<dyn MyTrait> {
+//!     fn clone(&self) -> Self {
+//!         dyn_clone::clone_box(&**self)
+//!     }
+//! }
+//!
+//! // and similar for Box<dyn MyTrait + Send>, Box<dyn MyTrait + Sync>, Box<dyn MyTrait + Send + Sync>
+//! ```
 
 #![doc(html_root_url = "https://docs.rs/dyn_clone/1.0.7")]
 #![no_std]
