@@ -67,7 +67,7 @@
 //! }
 //! ```
 
-#![doc(html_root_url = "https://docs.rs/dyn_clone/1.0.6")]
+#![doc(html_root_url = "https://docs.rs/dyn_clone/1.0.7")]
 #![no_std]
 #![allow(clippy::missing_panics_doc)]
 
