@@ -2,13 +2,13 @@
 name = "dyn-clone"
 version = "1.0.8" # remember to update html_root_url
 authors = ["David Tolnay <dtolnay@gmail.com>"]
-edition = "2018"
-rust-version = "1.45"
-license = "MIT OR Apache-2.0"
 description = "Clone trait that is object-safe"
-repository = "https://github.com/dtolnay/dyn-clone"
 documentation = "https://docs.rs/dyn-clone"
+edition = "2018"
+license = "MIT OR Apache-2.0"
 readme = "README.md"
+repository = "https://github.com/dtolnay/dyn-clone"
+rust-version = "1.45"
 
 [dev-dependencies]
 rustversion = "1.0"
