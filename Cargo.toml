@@ -6,6 +6,7 @@ categories = ["rust-patterns", "no-std"]
 description = "Clone trait that is object-safe"
 documentation = "https://docs.rs/dyn-clone"
 edition = "2018"
+keywords = ["dyn", "clone", "trait-object"]
 license = "MIT OR Apache-2.0"
 readme = "README.md"
 repository = "https://github.com/dtolnay/dyn-clone"
