@@ -86,22 +86,22 @@ macro_rules! __internal_clone_trait_object {
 
     // The impl.
     (impl ($($generics:tt)*) ($($path:tt)*) ($($bound:tt)*)) => {
-        impl<'clone, $($generics)*> $crate::private::Clone for $crate::private::Box<dyn $($path)* + 'clone> where $($bound)* {
+        impl<'clone, $($generics)*> $crate::__private::Clone for $crate::__private::Box<dyn $($path)* + 'clone> where $($bound)* {
             fn clone(&self) -> Self {
                 $crate::clone_box(&**self)
             }
         }
-        impl<'clone, $($generics)*> $crate::private::Clone for $crate::private::Box<dyn $($path)* + $crate::private::Send + 'clone> where $($bound)* {
+        impl<'clone, $($generics)*> $crate::__private::Clone for $crate::__private::Box<dyn $($path)* + $crate::__private::Send + 'clone> where $($bound)* {
             fn clone(&self) -> Self {
                 $crate::clone_box(&**self)
             }
         }
-        impl<'clone, $($generics)*> $crate::private::Clone for $crate::private::Box<dyn $($path)* + $crate::private::Sync + 'clone> where $($bound)* {
+        impl<'clone, $($generics)*> $crate::__private::Clone for $crate::__private::Box<dyn $($path)* + $crate::__private::Sync + 'clone> where $($bound)* {
             fn clone(&self) -> Self {
                 $crate::clone_box(&**self)
             }
         }
-        impl<'clone, $($generics)*> $crate::private::Clone for $crate::private::Box<dyn $($path)* + $crate::private::Send + $crate::private::Sync + 'clone> where $($bound)* {
+        impl<'clone, $($generics)*> $crate::__private::Clone for $crate::__private::Box<dyn $($path)* + $crate::__private::Send + $crate::__private::Sync + 'clone> where $($bound)* {
             fn clone(&self) -> Self {
                 $crate::clone_box(&**self)
             }

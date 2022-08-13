@@ -95,8 +95,9 @@ use crate::sealed::{Private, Sealed};
 #[macro_use]
 mod macros;
 
+// Not public API.
 #[doc(hidden)]
-pub mod private {
+pub mod __private {
     pub use alloc::boxed::Box;
     pub use core::clone::Clone;
     pub use core::marker::{Send, Sync};
