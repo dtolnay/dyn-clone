@@ -7,7 +7,7 @@ error[E0277]: the trait bound `dyn MyTrait: Clone` is not satisfied
     = help: the following other types implement trait `DynClone`:
               [T]
               str
-    = note: required because of the requirements on the impl of `DynClone` for `dyn MyTrait`
+    = note: required for `dyn MyTrait` to implement `DynClone`
 note: required by a bound in `clone_box`
    --> src/lib.rs
     |
@@ -24,7 +24,7 @@ error[E0277]: the trait bound `dyn MyTrait + Send: Clone` is not satisfied
     = help: the following other types implement trait `DynClone`:
               [T]
               str
-    = note: required because of the requirements on the impl of `DynClone` for `dyn MyTrait + Send`
+    = note: required for `dyn MyTrait + Send` to implement `DynClone`
 note: required by a bound in `clone_box`
    --> src/lib.rs
     |
@@ -41,7 +41,7 @@ error[E0277]: the trait bound `dyn MyTrait + Sync: Clone` is not satisfied
     = help: the following other types implement trait `DynClone`:
               [T]
               str
-    = note: required because of the requirements on the impl of `DynClone` for `dyn MyTrait + Sync`
+    = note: required for `dyn MyTrait + Sync` to implement `DynClone`
 note: required by a bound in `clone_box`
    --> src/lib.rs
     |
@@ -58,7 +58,7 @@ error[E0277]: the trait bound `dyn MyTrait + Send + Sync: Clone` is not satisfie
     = help: the following other types implement trait `DynClone`:
               [T]
               str
-    = note: required because of the requirements on the impl of `DynClone` for `dyn MyTrait + Send + Sync`
+    = note: required for `dyn MyTrait + Send + Sync` to implement `DynClone`
 note: required by a bound in `clone_box`
    --> src/lib.rs
     |
