@@ -8,7 +8,6 @@ documentation = "https://docs.rs/dyn-clone"
 edition = "2018"
 keywords = ["dyn", "clone", "trait-object"]
 license = "MIT OR Apache-2.0"
-readme = "README.md"
 repository = "https://github.com/dtolnay/dyn-clone"
 rust-version = "1.45"
 
