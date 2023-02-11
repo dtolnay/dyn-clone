@@ -1,3 +1,5 @@
+#![allow(clippy::extra_unused_type_parameters)]
+
 use dyn_clone::{clone_trait_object, DynClone};
 
 fn assert_clone<T: Clone>() {}
