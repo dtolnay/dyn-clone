@@ -90,8 +90,6 @@
 
 extern crate alloc;
 
-use crate::sealed::{Private, Sealed};
-
 #[macro_use]
 mod macros;
 
@@ -111,6 +109,11 @@ mod sealed {
     pub struct Private;
 }
 
+use crate::sealed::{Private, Sealed};
+use alloc::boxed::Box;
+use alloc::rc::Rc;
+use alloc::sync::Arc;
+
 /// This trait is implemented by any type that implements [`std::clone::Clone`].
 ///
 /// [`std::clone::Clone`]: https://doc.rust-lang.org/std/clone/trait.Clone.html
@@ -119,10 +122,6 @@ pub trait DynClone: Sealed {
     #[doc(hidden)]
     fn __clone_box(&self, _: Private) -> *mut ();
 }
-
-use alloc::boxed::Box;
-use alloc::rc::Rc;
-use alloc::sync::Arc;
 
 /// `&T`&ensp;&mdash;&blacktriangleright;&ensp;`T`
 pub fn clone<T>(t: &T) -> T
