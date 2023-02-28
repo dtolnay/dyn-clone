@@ -1,3 +1,5 @@
+use crate::DynClone;
+
 /// Implement the standard library `Clone` for a trait object that has
 /// `DynClone` as a supertrait.
 ///
@@ -108,3 +110,5 @@ macro_rules! __internal_clone_trait_object {
         }
     };
 }
+
+clone_trait_object!(DynClone);
