@@ -96,9 +96,13 @@ mod macros;
 // Not public API.
 #[doc(hidden)]
 pub mod __private {
-    pub use alloc::boxed::Box;
+    #[doc(hidden)]
     pub use core::clone::Clone;
+    #[doc(hidden)]
     pub use core::marker::{Send, Sync};
+
+    #[doc(hidden)]
+    pub type Box<T> = alloc::boxed::Box<T>;
 }
 
 mod sealed {
