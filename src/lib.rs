@@ -86,7 +86,11 @@
 
 #![doc(html_root_url = "https://docs.rs/dyn_clone/1.0.13")]
 #![no_std]
-#![allow(clippy::missing_panics_doc, clippy::ptr_as_ptr)]
+#![allow(
+    clippy::missing_panics_doc,
+    clippy::needless_doctest_main,
+    clippy::ptr_as_ptr
+)]
 
 extern crate alloc;
 
