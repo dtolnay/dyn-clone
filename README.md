@@ -71,11 +71,6 @@ struct Container {
 }
 ```
 
-Check out the [dyn-clonable] crate which provides the same Clone impl for
-`Box<dyn MyTrait>` in a more concise attribute form.
-
-[dyn-clonable]: https://github.com/kardeiz/objekt-clonable
-
 <br>
 
 #### License
