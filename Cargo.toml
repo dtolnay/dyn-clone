@@ -1,6 +1,6 @@
 [package]
 name = "dyn-clone"
-version = "1.0.14" # remember to update html_root_url
+version = "1.0.14"
 authors = ["David Tolnay <dtolnay@gmail.com>"]
 categories = ["rust-patterns", "no-std"]
 description = "Clone trait that is object-safe"
