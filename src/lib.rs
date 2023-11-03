@@ -81,7 +81,7 @@
 //! ```
 
 #![doc(html_root_url = "https://docs.rs/dyn_clone/1.0.14")]
-#![no_std]
+#![cfg_attr(not(doc), no_std)]
 #![allow(
     clippy::missing_panics_doc,
     clippy::needless_doctest_main,
