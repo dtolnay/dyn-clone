@@ -81,7 +81,7 @@
 //! ```
 
 #![doc(html_root_url = "https://docs.rs/dyn_clone/1.0.14")]
-#![cfg_attr(not(doc), no_std)]
+#![no_std]
 #![allow(
     clippy::missing_panics_doc,
     clippy::needless_doctest_main,
@@ -89,6 +89,9 @@
 )]
 
 extern crate alloc;
+
+#[cfg(doc)]
+extern crate core as std;
 
 #[macro_use]
 mod macros;
