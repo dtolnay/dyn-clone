@@ -80,7 +80,7 @@
 //! // and similar for Box<dyn MyTrait + Send>, Box<dyn MyTrait + Sync>, Box<dyn MyTrait + Send + Sync>
 //! ```
 
-#![doc(html_root_url = "https://docs.rs/dyn_clone/1.0.15")]
+#![doc(html_root_url = "https://docs.rs/dyn-clone/1.0.15")]
 #![no_std]
 #![allow(
     clippy::missing_panics_doc,
