@@ -12,10 +12,6 @@
 //! [`std::clone::Clone`] trait are automatically usable by a `DynClone` trait
 //! object.
 //!
-//! [`DynClone`]: trait.DynClone.html
-//! [`clone_box`]: fn.clone_box.html
-//! [`std::clone::Clone`]: https://doc.rust-lang.org/std/clone/trait.Clone.html
-//!
 //! # Example
 //!
 //! ```
@@ -123,8 +119,6 @@ use alloc::rc::Rc;
 use alloc::sync::Arc;
 
 /// This trait is implemented by any type that implements [`std::clone::Clone`].
-///
-/// [`std::clone::Clone`]: https://doc.rust-lang.org/std/clone/trait.Clone.html
 pub trait DynClone: Sealed {
     // Not public API
     #[doc(hidden)]
