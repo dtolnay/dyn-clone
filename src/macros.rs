@@ -88,21 +88,28 @@ macro_rules! __internal_clone_trait_object {
 
     // The impl.
     (impl ($($generics:tt)*) ($($path:tt)*) ($($bound:tt)*)) => {
+        #[allow(unknown_lints, non_local_definitions)] // false positive: https://github.com/rust-lang/rust/issues/121621
         impl<'clone, $($generics)*> $crate::__private::Clone for $crate::__private::Box<dyn $($path)* + 'clone> where $($bound)* {
             fn clone(&self) -> Self {
                 $crate::clone_box(&**self)
             }
         }
+
+        #[allow(unknown_lints, non_local_definitions)] // false positive: https://github.com/rust-lang/rust/issues/121621
         impl<'clone, $($generics)*> $crate::__private::Clone for $crate::__private::Box<dyn $($path)* + $crate::__private::Send + 'clone> where $($bound)* {
             fn clone(&self) -> Self {
                 $crate::clone_box(&**self)
             }
         }
+
+        #[allow(unknown_lints, non_local_definitions)] // false positive: https://github.com/rust-lang/rust/issues/121621
         impl<'clone, $($generics)*> $crate::__private::Clone for $crate::__private::Box<dyn $($path)* + $crate::__private::Sync + 'clone> where $($bound)* {
             fn clone(&self) -> Self {
                 $crate::clone_box(&**self)
             }
         }
+
+        #[allow(unknown_lints, non_local_definitions)] // false positive: https://github.com/rust-lang/rust/issues/121621
         impl<'clone, $($generics)*> $crate::__private::Clone for $crate::__private::Box<dyn $($path)* + $crate::__private::Send + $crate::__private::Sync + 'clone> where $($bound)* {
             fn clone(&self) -> Self {
                 $crate::clone_box(&**self)
