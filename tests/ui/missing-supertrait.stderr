@@ -4,7 +4,7 @@ error[E0277]: the trait bound `dyn MyTrait: DynClone` is not satisfied
 3 | dyn_clone::clone_trait_object!(MyTrait);
   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   | |
-  | the trait `Clone` is not implemented for `dyn MyTrait`, which is required by `dyn MyTrait: DynClone`
+  | the trait `Clone` is not implemented for `dyn MyTrait`
   | required by a bound introduced by this call
   |
   = help: the following other types implement trait `DynClone`:
@@ -27,7 +27,7 @@ error[E0277]: the trait bound `dyn MyTrait + Send: DynClone` is not satisfied
 3 | dyn_clone::clone_trait_object!(MyTrait);
   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   | |
-  | the trait `Clone` is not implemented for `dyn MyTrait + Send`, which is required by `dyn MyTrait + Send: DynClone`
+  | the trait `Clone` is not implemented for `dyn MyTrait + Send`
   | required by a bound introduced by this call
   |
   = help: the following other types implement trait `DynClone`:
@@ -50,7 +50,7 @@ error[E0277]: the trait bound `dyn MyTrait + Sync: DynClone` is not satisfied
 3 | dyn_clone::clone_trait_object!(MyTrait);
   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   | |
-  | the trait `Clone` is not implemented for `dyn MyTrait + Sync`, which is required by `dyn MyTrait + Sync: DynClone`
+  | the trait `Clone` is not implemented for `dyn MyTrait + Sync`
   | required by a bound introduced by this call
   |
   = help: the following other types implement trait `DynClone`:
@@ -73,7 +73,7 @@ error[E0277]: the trait bound `dyn MyTrait + Send + Sync: DynClone` is not satis
 3 | dyn_clone::clone_trait_object!(MyTrait);
   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   | |
-  | the trait `Clone` is not implemented for `dyn MyTrait + Send + Sync`, which is required by `dyn MyTrait + Send + Sync: DynClone`
+  | the trait `Clone` is not implemented for `dyn MyTrait + Send + Sync`
   | required by a bound introduced by this call
   |
   = help: the following other types implement trait `DynClone`:
