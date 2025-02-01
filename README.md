@@ -1,5 +1,5 @@
-Clone trait that is object-safe
-===============================
+Clone trait that is dyn-compatible
+==================================
 
 [<img alt="github" src="https://img.shields.io/badge/github-dtolnay/dyn--clone-8da0cb?style=for-the-badge&labelColor=555555&logo=github" height="20">](https://github.com/dtolnay/dyn-clone)
 [<img alt="crates.io" src="https://img.shields.io/crates/v/dyn-clone.svg?style=for-the-badge&color=fc8d62&logo=rust" height="20">](https://crates.io/crates/dyn-clone)
