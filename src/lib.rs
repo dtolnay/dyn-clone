@@ -119,7 +119,11 @@ mod sealed {
 use crate::sealed::{Private, Sealed};
 use alloc::boxed::Box;
 use alloc::rc::Rc;
+
+#[cfg(not(feature = "portable_atomic"))]
 use alloc::sync::Arc;
+#[cfg(feature = "portable_atomic")]
+use portable_atomic_util::Arc;
 
 /// This trait is implemented by any type that implements [`std::clone::Clone`].
 pub trait DynClone: Sealed {
