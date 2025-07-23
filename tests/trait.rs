@@ -1,3 +1,5 @@
+#![cfg(target_has_atomic = "ptr")]
+
 use dyn_clone::DynClone;
 use std::fmt::{self, Display};
 use std::sync::{Arc, Mutex};
