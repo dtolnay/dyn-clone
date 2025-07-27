@@ -1,3 +1,5 @@
+#![cfg(target_has_atomic = "ptr")]
+
 use dyn_clone::DynClone;
 use std::fmt::{self, Display};
 use std::sync::{Arc, Mutex};
@@ -24,10 +26,7 @@ impl Display for Log {
 
 impl Drop for Log {
     fn drop(&mut self) {
-        self.events
-            .lock()
-            .unwrap()
-            .push(format!("dropping {}", self));
+        self.events.lock().unwrap().push(format!("dropping {self}"));
     }
 }
 
