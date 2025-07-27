@@ -36,6 +36,19 @@ jobs:
         if: matrix.rust == 'nightly'
       - run: cargo test
 
+  embedded:
+    name: No atomic
+    needs: pre_ci
+    if: needs.pre_ci.outputs.continue
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: thumbv6m-none-eabi
+      - run: cargo check --target thumbv6m-none-eabi
+
   msrv:
     name: Rust 1.60.0
     needs: pre_ci
