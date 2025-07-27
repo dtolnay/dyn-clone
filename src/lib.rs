@@ -119,6 +119,7 @@ mod sealed {
 use crate::sealed::{Private, Sealed};
 use alloc::boxed::Box;
 use alloc::rc::Rc;
+#[cfg(target_has_atomic = "ptr")]
 use alloc::sync::Arc;
 
 /// This trait is implemented by any type that implements [`std::clone::Clone`].
@@ -151,6 +152,7 @@ where
 }
 
 /// `&mut Arc<T>`&ensp;&mdash;&blacktriangleright;&ensp;`&mut T`
+#[cfg(target_has_atomic = "ptr")]
 pub fn arc_make_mut<T>(arc: &mut Arc<T>) -> &mut T
 where
     T: ?Sized + DynClone,
