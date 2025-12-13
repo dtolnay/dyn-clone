@@ -146,10 +146,10 @@ where
     let mut fat_ptr = t as *const T;
     unsafe {
         let data_ptr = ptr::addr_of_mut!(fat_ptr) as *mut *mut ();
-        assert_eq!(*data_ptr as *const (), t as *const T as *const ());
+        assert_eq!((*data_ptr).cast_const(), t as *const T as *const ());
         *data_ptr = <T as DynClone>::__clone_box(t, Private);
     }
-    unsafe { Box::from_raw(fat_ptr as *mut T) }
+    unsafe { Box::from_raw(fat_ptr.cast_mut()) }
 }
 
 /// `&mut Arc<T>`&ensp;&mdash;&blacktriangleright;&ensp;`&mut T`
@@ -175,7 +175,7 @@ where
         *arc = clone;
     }
     // Non-atomic. TODO: replace with Arc::get_mut_unchecked when stable.
-    let ptr = Arc::as_ptr(arc) as *mut T;
+    let ptr = Arc::as_ptr(arc).cast_mut();
     unsafe { &mut *ptr }
 }
 
@@ -189,7 +189,7 @@ where
         let clone = Rc::from(clone_box(&**rc));
         *rc = clone;
     }
-    let ptr = Rc::as_ptr(rc) as *mut T;
+    let ptr = Rc::as_ptr(rc).cast_mut();
     unsafe { &mut *ptr }
 }
 
