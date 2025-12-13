@@ -139,10 +139,10 @@ pub fn clone_box<T>(t: &T) -> Box<T>
 where
     T: ?Sized + DynClone,
 {
-    let mut fat_ptr = t as *const T;
+    let mut fat_ptr = ptr::addr_of!(*t);
     unsafe {
         let data_ptr = ptr::addr_of_mut!(fat_ptr).cast::<*mut ()>();
-        assert_eq!((*data_ptr).cast_const(), (t as *const T).cast::<()>());
+        assert_eq!((*data_ptr).cast_const(), ptr::addr_of!(*t).cast::<()>());
         *data_ptr = <T as DynClone>::__clone_box(t, Private);
     }
     unsafe { Box::from_raw(fat_ptr.cast_mut()) }
