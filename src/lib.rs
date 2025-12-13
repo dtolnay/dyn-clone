@@ -82,11 +82,7 @@
 
 #![doc(html_root_url = "https://docs.rs/dyn-clone/1.0.20")]
 #![no_std]
-#![allow(
-    clippy::missing_panics_doc,
-    clippy::needless_doctest_main,
-    clippy::ptr_as_ptr
-)]
+#![allow(clippy::missing_panics_doc, clippy::needless_doctest_main)]
 
 extern crate alloc;
 
@@ -135,7 +131,7 @@ pub fn clone<T>(t: &T) -> T
 where
     T: DynClone,
 {
-    unsafe { *Box::from_raw(<T as DynClone>::__clone_box(t, Private) as *mut T) }
+    unsafe { *Box::from_raw(<T as DynClone>::__clone_box(t, Private).cast::<T>()) }
 }
 
 /// `&T`&ensp;&mdash;&blacktriangleright;&ensp;`Box<T>`
@@ -145,8 +141,8 @@ where
 {
     let mut fat_ptr = t as *const T;
     unsafe {
-        let data_ptr = ptr::addr_of_mut!(fat_ptr) as *mut *mut ();
-        assert_eq!((*data_ptr).cast_const(), t as *const T as *const ());
+        let data_ptr = ptr::addr_of_mut!(fat_ptr).cast::<*mut ()>();
+        assert_eq!((*data_ptr).cast_const(), (t as *const T).cast::<()>());
         *data_ptr = <T as DynClone>::__clone_box(t, Private);
     }
     unsafe { Box::from_raw(fat_ptr.cast_mut()) }
@@ -198,13 +194,13 @@ where
     T: Clone,
 {
     fn __clone_box(&self, _: Private) -> *mut () {
-        Box::<T>::into_raw(Box::new(self.clone())) as *mut ()
+        Box::<T>::into_raw(Box::new(self.clone())).cast::<()>()
     }
 }
 
 impl DynClone for str {
     fn __clone_box(&self, _: Private) -> *mut () {
-        Box::<str>::into_raw(Box::from(self)) as *mut ()
+        Box::<str>::into_raw(Box::from(self)).cast::<()>()
     }
 }
 
@@ -213,6 +209,6 @@ where
     T: Clone,
 {
     fn __clone_box(&self, _: Private) -> *mut () {
-        Box::<[T]>::into_raw(self.iter().cloned().collect()) as *mut ()
+        Box::<[T]>::into_raw(self.iter().cloned().collect()).cast::<()>()
     }
 }
