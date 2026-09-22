@@ -22,7 +22,6 @@ note: required by a bound in `clone_box`
  --> src/lib.rs
   |
   | pub fn clone_box<T>(t: &T) -> Box<T>
-  |        --------- required by a bound in this function
   | where
   |     T: ?Sized + DynClone,
   |                 ^^^^^^^^ required by this bound in `clone_box`
@@ -52,7 +51,6 @@ note: required by a bound in `clone_box`
  --> src/lib.rs
   |
   | pub fn clone_box<T>(t: &T) -> Box<T>
-  |        --------- required by a bound in this function
   | where
   |     T: ?Sized + DynClone,
   |                 ^^^^^^^^ required by this bound in `clone_box`
@@ -82,7 +80,6 @@ note: required by a bound in `clone_box`
  --> src/lib.rs
   |
   | pub fn clone_box<T>(t: &T) -> Box<T>
-  |        --------- required by a bound in this function
   | where
   |     T: ?Sized + DynClone,
   |                 ^^^^^^^^ required by this bound in `clone_box`
@@ -112,7 +109,6 @@ note: required by a bound in `clone_box`
  --> src/lib.rs
   |
   | pub fn clone_box<T>(t: &T) -> Box<T>
-  |        --------- required by a bound in this function
   | where
   |     T: ?Sized + DynClone,
   |                 ^^^^^^^^ required by this bound in `clone_box`
